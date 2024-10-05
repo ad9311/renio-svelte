@@ -1,5 +1,5 @@
 import type { RequestEvent } from '@sveltejs/kit';
-import { PUBLIC_HOST } from '$env/static/public'
+import { PUBLIC_HOST } from '$env/static/public';
 
 type HandleParams = {
 	event: RequestEvent;
@@ -8,7 +8,7 @@ type HandleParams = {
 
 export async function handle({ event, resolve }: HandleParams) {
 	const pathname: string = event.url.pathname;
-	const session = undefined;
+	const session = event.cookies.get('renio-session');
 
 	if (pathname.startsWith('/auth') && session) {
 		return Response.redirect(`${PUBLIC_HOST}`, 302);
