@@ -13,27 +13,27 @@ export default tseslint.config(
 	...svelte.configs['flat/prettier'],
 	{
 		plugins: {
-			import: i
-		}
+			import: i,
+		},
 	},
 	{
 		languageOptions: {
 			globals: {
 				...globals.browser,
-				...globals.node
-			}
-		}
+				...globals.node,
+			},
+		},
 	},
 	{
 		files: ['**/*.svelte'],
 		languageOptions: {
 			parserOptions: {
-				parser: tseslint.parser
-			}
-		}
+				parser: tseslint.parser,
+			},
+		},
 	},
 	{
-		ignores: ['build/', '.svelte-kit/', 'dist/']
+		ignores: ['build/', '.svelte-kit/', 'dist/'],
 	},
 	{
 		rules: {
@@ -46,9 +46,9 @@ export default tseslint.config(
 				{
 					groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
 					'newlines-between': 'always',
-					alphabetize: { order: 'asc', caseInsensitive: true }
-				}
-			]
-		}
-	}
+					alphabetize: { order: 'asc', caseInsensitive: true },
+				},
+			],
+		},
+	},
 );

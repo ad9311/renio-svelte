@@ -1,6 +1,6 @@
 export const defaultHeaders: HeadersInit = {
 	Accept: 'application/json',
-	'Content-Type': 'application/json'
+	'Content-Type': 'application/json',
 };
 
 export async function getResource(url: string): Promise<Response> {

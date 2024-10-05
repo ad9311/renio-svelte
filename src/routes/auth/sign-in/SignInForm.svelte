@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { Label, Input, Button } from 'flowbite-svelte';
+	import type { ActionData } from './$types';
+
+	export let form: ActionData;
 </script>
+
+{#if form?.errors}{/if}
 
 <form method="POST" class="form">
 	<fieldset>
