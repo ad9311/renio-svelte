@@ -1,6 +1,7 @@
 <script lang="ts">
-	import FormErrors from '$lib/components/FormErrors.svelte';
 	import SignInForm from './SignInForm.svelte';
+
+	import FormErrors from '$lib/components/FormErrors.svelte';
 
 	export let form;
 </script>

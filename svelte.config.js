@@ -15,13 +15,6 @@ const config = {
 		alias: {
 			types: 'src/types',
 		},
-		files: {
-			hooks: {
-				universal: 'src/hooks/index.ts',
-				server: 'src/hooks/server/index.ts',
-				client: 'src/hooks/client/index.ts',
-			},
-		},
 	},
 };
 

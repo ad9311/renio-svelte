@@ -3,18 +3,20 @@ export const defaultHeaders: HeadersInit = {
 	'Content-Type': 'application/json',
 };
 
-export async function getResource(url: string): Promise<Response> {
-	return fetch(url, { headers: defaultHeaders });
+type Fetch = typeof fetch;
+
+export async function getResource(fn: Fetch, url: string): Promise<Response> {
+	return fn(url, { headers: defaultHeaders });
 }
 
-export async function postResource(url: string, body: BodyInit): Promise<Response> {
-	return fetch(url, { method: 'POST', headers: defaultHeaders, body });
+export async function postResource(fn: Fetch, url: string, body: BodyInit): Promise<Response> {
+	return fn(url, { method: 'POST', headers: defaultHeaders, body });
 }
 
-export async function patchResource(url: string, body: BodyInit): Promise<Response> {
-	return fetch(url, { method: 'PATCH', headers: defaultHeaders, body });
+export async function patchResource(fn: Fetch, url: string, body: BodyInit): Promise<Response> {
+	return fn(url, { method: 'PATCH', headers: defaultHeaders, body });
 }
 
-export async function deleteResource(url: string): Promise<Response> {
-	return fetch(url, { method: 'DELETE', headers: defaultHeaders });
+export async function deleteResource(fn: Fetch, url: string): Promise<Response> {
+	return fn(url, { method: 'DELETE', headers: defaultHeaders });
 }

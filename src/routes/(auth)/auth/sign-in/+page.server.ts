@@ -2,11 +2,11 @@ import type { RequestEvent } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 
 import { API } from '$env/static/private';
+import { formatZodErrors } from '$lib';
 import { defaultHeaders } from '$lib/fetch/index.js';
 import { retrieveSessionToken } from '$lib/server/index.js';
 import type { ActionResponse, User } from '$lib/types/common';
 import { SignInDataValidation } from '$lib/validations';
-import { formatZodErrors } from '$lib';
 
 export const actions = {
 	default: async (event: RequestEvent): Promise<ActionResponse<User>> => {
