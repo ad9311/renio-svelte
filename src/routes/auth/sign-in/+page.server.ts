@@ -1,23 +1,27 @@
 import type { RequestEvent } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 
 import { API } from '$env/static/private';
 import { defaultHeaders } from '$lib/fetch/index.js';
 import { retrieveSessionToken } from '$lib/server/index.js';
+import type { ActionResponse, User } from '$lib/types/common';
+import { SignInDataValidation } from '$lib/validations';
 
 export const actions = {
-	default: async (event: RequestEvent) => {
+	default: async (event: RequestEvent): Promise<ActionResponse<User>> => {
 		const formData = await event.request.formData();
-		const email = formData.get('email');
-		const password = formData.get('password');
-		const body = JSON.stringify({
+		const signInData = {
 			user: {
-				email,
-				password
+				email: formData.get('email'),
+				password: formData.get('password')
 			}
-		});
+		};
+		const validation = SignInDataValidation.safeParse(signInData);
+		if (validation.error) {
+			return { data: null, errors: [] };
+		}
 
-		// Validations here
-
+		const body = JSON.stringify({ ...signInData });
 		const response = await fetch(`${API}/users/sign_in`, {
 			headers: defaultHeaders,
 			method: 'POST',
@@ -29,10 +33,9 @@ export const actions = {
 			event.cookies.set('renio-session', sessionToken, {
 				path: '/'
 			});
-			const json = await response.json();
-			return { user: json.data.user, errors: [] };
+			redirect(302, '/');
 		}
 
-		return { user: null, errors: [response.statusText] };
+		return { data: null, errors: [response.statusText] };
 	}
 };
