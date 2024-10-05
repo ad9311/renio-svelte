@@ -1,4 +1,5 @@
 import type { RequestEvent } from '@sveltejs/kit';
+
 import { PUBLIC_HOST } from '$env/static/public';
 
 type HandleParams = {

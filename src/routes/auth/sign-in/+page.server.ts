@@ -1,5 +1,8 @@
-import { API } from '$env/static/private';
 import type { RequestEvent } from '@sveltejs/kit';
+
+import { API } from '$env/static/private';
+import { defaultHeaders } from '$lib/fetch/index.js';
+import { retrieveSessionToken } from '$lib/server/index.js';
 
 export const actions = {
 	default: async (event: RequestEvent) => {
@@ -9,29 +12,27 @@ export const actions = {
 		const body = JSON.stringify({
 			user: {
 				email,
-				password,
+				password
 			}
 		});
 
 		// Validations here
 
-		const response = await fetch(`${API}/users/sign_in`,
-			{
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json'
-				},
-				method: 'POST',
-				body
-			}
-		);
+		const response = await fetch(`${API}/users/sign_in`, {
+			headers: defaultHeaders,
+			method: 'POST',
+			body
+		});
 
 		if (response.ok) {
-			// Save session cookie here
+			const sessionToken = (await retrieveSessionToken(response)) as string;
+			event.cookies.set('renio-session', sessionToken, {
+				path: '/'
+			});
 			const json = await response.json();
 			return { user: json.data.user, errors: [] };
 		}
 
-		return { user: null, errors: [] }
+		return { user: null, errors: [response.statusText] };
 	}
 };
