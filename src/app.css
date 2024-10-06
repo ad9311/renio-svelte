@@ -18,7 +18,11 @@
 	}
 
 	.title {
-		@apply text-lg text-slate-600 font-semibold;
+		@apply text-xl text-slate-600 font-semibold;
+	}
+
+	.subtitle {
+		@apply text-lg text-primary-600 font-semibold;
 	}
 
 	.title-primary {

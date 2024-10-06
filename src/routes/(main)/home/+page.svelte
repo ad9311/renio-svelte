@@ -1,5 +1,6 @@
 <script>
-	import CurrentBudget from '$lib/components/budgets/CurrentBudget.svelte';
+	import { page } from '$app/stores';
+	import BudgetAccountInfo from '$lib/components/budgets/BudgetAccountInfo.svelte';
 </script>
 
-<CurrentBudget />
+<BudgetAccountInfo budgetAccount={$page.data.budgetAccount} />

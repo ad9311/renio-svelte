@@ -29,3 +29,11 @@ export type FullBudget = Budget & {
 	incomeList: Transaction[];
 	expenses: Transaction[];
 };
+
+export type BudgetAccount = {
+	currentBudget: {
+		uid: string;
+		balance: number;
+		lastExpenseAmount: number | null;
+	} | null;
+};
