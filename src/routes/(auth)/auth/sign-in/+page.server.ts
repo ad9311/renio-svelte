@@ -1,11 +1,11 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 
-import { API } from '$env/static/private';
+import { PUBLIC_API } from '$env/static/public';
 import { formatZodErrors } from '$lib';
 import { defaultHeaders } from '$lib/fetch/index.js';
 import { retrieveSessionToken } from '$lib/server/index.js';
-import type { ActionResponse, User } from '$lib/types/common';
+import type { ActionResponse, User } from '$lib/types';
 import { SignInDataValidation } from '$lib/validations';
 
 export const actions = {
@@ -22,7 +22,7 @@ export const actions = {
 		}
 
 		const body = JSON.stringify({ user: { ...signInData } });
-		const response = await fetch(`${API}/users/sign_in`, {
+		const response = await fetch(`${PUBLIC_API}/users/sign_in`, {
 			headers: defaultHeaders,
 			method: 'POST',
 			body,

@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	body {
+		@apply bg-neutral-100;
+	}
+}
+
 @layer utilities {
 	.form fieldset {
 		@apply mb-4;
@@ -9,5 +15,17 @@
 
 	.form .actions {
 		@apply mt-2 flex items-center justify-end gap-2;
+	}
+
+	.title {
+		@apply text-xl text-slate-600 font-semibold;
+	}
+
+	.subtitle {
+		@apply text-lg text-primary-600 font-semibold;
+	}
+
+	.title-primary {
+		@apply text-2xl text-primary-700 font-bold;
 	}
 }

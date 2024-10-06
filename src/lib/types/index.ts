@@ -16,3 +16,16 @@ export type Session = {
 	user: User;
 	expires: string | null;
 };
+
+export type FlowbiteColors =
+	| 'none'
+	| 'green'
+	| 'red'
+	| 'dark'
+	| 'yellow'
+	| 'indigo'
+	| 'purple'
+	| 'pink'
+	| 'blue'
+	| 'primary'
+	| undefined;
