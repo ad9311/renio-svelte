@@ -6,7 +6,7 @@
 	export let amount: number | null;
 </script>
 
-<Badge color="red" border>
+<Badge color="green" border>
 	{#if amount}
 		{formatCurrency(amount)}
 	{:else}

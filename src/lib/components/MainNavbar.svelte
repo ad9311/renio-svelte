@@ -50,44 +50,43 @@
 	<button on:click={() => (hidden = false)}>
 		<BarsOutline size="xl" />
 	</button>
-</Navbar>
-
-<Drawer placement="right" transitionType="fly" {transitionParams} bind:hidden id="sidebar2">
-	<div class="flex items-center">
-		<h5 class="ml-1 title">Menu</h5>
-		<CloseButton on:click={() => (hidden = true)} />
-	</div>
-	<div class="mt-12 mb-4 w-fit mx-auto">
-		<div>
-			<Avatar rounded border size="lg" />
+	<Drawer placement="right" transitionType="fly" {transitionParams} bind:hidden id="sidebar2">
+		<div class="flex items-center">
+			<h5 class="ml-1 title">Menu</h5>
+			<CloseButton on:click={() => (hidden = true)} />
 		</div>
-		<h6 class="mt-4 text-center text-gray-500 text-lg">Nombre</h6>
-	</div>
-	<Sidebar>
-		<SidebarWrapper divClass="overflow-y-auto py-4 rounded">
-			<SidebarGroup>
-				{#each settingsItems as item}
-					<SidebarItem label={item.label} href={item.href} class="text-slate-600">
-						<svelte:component this={item.icon} slot="icon" color="#6B7280" />
+		<div class="mt-12 mb-4 w-fit mx-auto">
+			<div>
+				<Avatar rounded border size="lg" />
+			</div>
+			<h6 class="mt-4 text-center text-gray-500 text-lg">Nombre</h6>
+		</div>
+		<Sidebar>
+			<SidebarWrapper divClass="overflow-y-auto py-4 rounded">
+				<SidebarGroup>
+					{#each settingsItems as item}
+						<SidebarItem label={item.label} href={item.href} class="text-slate-600">
+							<svelte:component this={item.icon} slot="icon" color="#6B7280" />
+						</SidebarItem>
+					{/each}
+				</SidebarGroup>
+				<Hr hrClass="my-2" />
+				<SidebarGroup>
+					{#each sectionItems as item}
+						<SidebarItem label={item.label} href={item.href} class="text-slate-600">
+							<svelte:component this={item.icon} slot="icon" color="#6B7280" />
+						</SidebarItem>
+					{/each}
+				</SidebarGroup>
+				<Hr hrClass="my-2" />
+				<SidebarGroup>
+					<SidebarItem label="Sing out" href="/auth/sign-out" class="text-red-400">
+						<svelte:fragment slot="icon">
+							<ArrowRightToBracketOutline color="#f98080" />
+						</svelte:fragment>
 					</SidebarItem>
-				{/each}
-			</SidebarGroup>
-			<Hr hrClass="my-2" />
-			<SidebarGroup>
-				{#each sectionItems as item}
-					<SidebarItem label={item.label} href={item.href} class="text-slate-600">
-						<svelte:component this={item.icon} slot="icon" color="#6B7280" />
-					</SidebarItem>
-				{/each}
-			</SidebarGroup>
-			<Hr hrClass="my-2" />
-			<SidebarGroup>
-				<SidebarItem label="Sing out" href="/auth/sign-out" class="text-red-400">
-					<svelte:fragment slot="icon">
-						<ArrowRightToBracketOutline color="#f98080" />
-					</svelte:fragment>
-				</SidebarItem>
-			</SidebarGroup>
-		</SidebarWrapper>
-	</Sidebar>
-</Drawer>
+				</SidebarGroup>
+			</SidebarWrapper>
+		</Sidebar>
+	</Drawer>
+</Navbar>

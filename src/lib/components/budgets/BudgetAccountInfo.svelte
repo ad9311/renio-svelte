@@ -18,7 +18,7 @@
 		<div class="mt-4">
 			<div class="flex items-center gap-1">
 				<h3 class="subtitle">Budgets</h3>
-				<a href="/">
+				<a href="/budgets">
 					<ArrowUpRightFromSquareSolid size="sm" />
 				</a>
 			</div>
@@ -28,9 +28,11 @@
 		<div>
 			<div class="flex items-center gap-1">
 				<h3 class="subtitle">Current budget</h3>
-				<a href="/">
-					<ArrowUpRightFromSquareSolid size="sm" />
-				</a>
+				{#if currentBudget}
+					<a href={`/budgets/${currentBudget?.uid}`}>
+						<ArrowUpRightFromSquareSolid size="sm" />
+					</a>
+				{/if}
 			</div>
 			{#if currentBudget}
 				<div class="mt-2 grid grid-flow-row gap-1">
