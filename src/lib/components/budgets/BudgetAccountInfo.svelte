@@ -7,9 +7,9 @@
 
 	import type { BudgetAccount } from '$lib/types/budgets';
 
-	export let budgetAccount: BudgetAccount;
+	export let budgetAccount: BudgetAccount | null;
 
-	const currentBudget = budgetAccount.currentBudget;
+	const currentBudget = budgetAccount?.currentBudget;
 </script>
 
 <Card class="max-w-full">
