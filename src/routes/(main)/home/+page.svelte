@@ -1,5 +1,5 @@
 <script>
-	import CurrentBudget from "./CurrentBudget.svelte";
+	import CurrentBudget from './CurrentBudget.svelte';
 </script>
 
 <CurrentBudget />
