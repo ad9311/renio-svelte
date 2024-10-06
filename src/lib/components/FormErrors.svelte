@@ -2,7 +2,7 @@
 	import { Alert } from 'flowbite-svelte';
 	import { InfoCircleSolid } from 'flowbite-svelte-icons';
 
-	import type { FormErrors } from '$lib/types/common';
+	import type { FormErrors } from '$lib/types';
 
 	export let errors: FormErrors;
 </script>

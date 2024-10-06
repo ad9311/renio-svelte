@@ -5,7 +5,7 @@ import { PUBLIC_API } from '$env/static/public';
 import { formatZodErrors } from '$lib';
 import { defaultHeaders } from '$lib/fetch/index.js';
 import { retrieveSessionToken } from '$lib/server/index.js';
-import type { ActionResponse, User } from '$lib/types/common';
+import type { ActionResponse, User } from '$lib/types';
 import { SignInDataValidation } from '$lib/validations';
 
 export const actions = {

@@ -2,6 +2,9 @@
 	import { Card, Hr } from 'flowbite-svelte';
 	import { ArrowUpRightFromSquareSolid } from 'flowbite-svelte-icons';
 
+	import BudgetBalance from './BudgetBalance.svelte';
+	import ExpenseAmount from './ExpenseAmount.svelte';
+
 	import type { BudgetAccount } from '$lib/types/budgets';
 
 	export let budgetAccount: BudgetAccount;
@@ -30,10 +33,22 @@
 				</a>
 			</div>
 			{#if currentBudget}
-				<p class="text-sm">Balance: {currentBudget.balance}</p>
-				<p class="text-sm">Last expense: {currentBudget.lastExpenseAmount}</p>
+				<div class="mt-2 grid grid-flow-row gap-1">
+					<div class="grid grid-cols-2">
+						<p>Balance:</p>
+						<div class="w-fit">
+							<BudgetBalance balance={currentBudget.balance} />
+						</div>
+					</div>
+					<div class="grid grid-cols-2">
+						<p>Last expense:</p>
+						<div class="w-fit">
+							<ExpenseAmount amount={currentBudget.lastExpenseAmount} />
+						</div>
+					</div>
+				</div>
 			{:else}
-				<p class="text-sm text-gray-400 text-center">No budget for this month</p>
+				<p class="mt-2 text-sm text-gray-400 text-center">No budget for this month</p>
 			{/if}
 		</div>
 	</section>
