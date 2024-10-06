@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Badge } from 'flowbite-svelte';
 
+	import { formatCurrency } from '$lib';
 	import type { FlowbiteColors } from '$lib/types';
 
 	export let balance: number;
@@ -16,4 +17,6 @@
 	}
 </script>
 
-<Badge color={badgeColor} border>{balance}</Badge>
+<Badge color={badgeColor} border>
+	{formatCurrency(balance)}
+</Badge>
