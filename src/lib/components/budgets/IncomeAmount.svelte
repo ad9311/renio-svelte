@@ -6,10 +6,12 @@
 	export let amount: number | null;
 </script>
 
-<Badge color="green" border>
-	{#if amount}
+{#if amount}
+	<Badge color="green" border>
 		{formatCurrency(amount)}
-	{:else}
+	</Badge>
+{:else}
+	<Badge color="none" border>
 		{formatCurrency(0)}
-	{/if}
-</Badge>
+	</Badge>
+{/if}
