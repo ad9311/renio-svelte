@@ -3,4 +3,4 @@
 	import BudgetAccountInfo from '$lib/components/budgets/BudgetAccountInfo.svelte';
 </script>
 
-<BudgetAccountInfo budgetAccount={$page.data.budgetAccount} />
+<BudgetAccountInfo budgetCount={$page.data.budgetCount} budgetAccount={$page.data.budgetAccount} />
