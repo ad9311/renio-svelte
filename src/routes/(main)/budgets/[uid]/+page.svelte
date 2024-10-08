@@ -5,7 +5,6 @@
 	import BudgetInfo from '$lib/components/budgets/BudgetInfo.svelte';
 	import type { FullBudget } from '$lib/types/budgets';
 
-
 	const budget: FullBudget | null = $page.data.budget;
 </script>
 
