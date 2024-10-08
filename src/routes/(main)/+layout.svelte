@@ -5,6 +5,6 @@
 <header>
 	<MainNavbar />
 </header>
-<main class="mt-4 container mx-auto">
+<main class="mt-4 px-2 container mx-auto">
 	<slot />
 </main>

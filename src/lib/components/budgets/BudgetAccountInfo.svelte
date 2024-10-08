@@ -13,7 +13,7 @@
 	const currentBudget = budgetAccount?.currentBudget;
 </script>
 
-<Card class="max-w-full">
+<Card size="none">
 	<section>
 		<h2 class="title">Accounts info</h2>
 		<div class="mt-4">
@@ -23,7 +23,9 @@
 					<ArrowUpRightFromSquareSolid size="sm" />
 				</a>
 			</div>
-			<p class="mt-2 text-sm">Budget count: <span class="font-semibold">{budgetCount}</span></p>
+			<p class="mt-2 text-sm">
+				Budget count: <span class="text-lg font-semibold">{budgetCount}</span>
+			</p>
 		</div>
 		<Hr hrClass="my-4" />
 		<div>
