@@ -13,7 +13,7 @@
 	const currentBudget = budgetAccount?.currentBudget;
 </script>
 
-<Card class="max-w-full">
+<Card size="none">
 	<section>
 		<h2 class="title">Accounts info</h2>
 		<div class="mt-4">

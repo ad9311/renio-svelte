@@ -11,12 +11,12 @@
 			budgetCount={$page.data.budgetCount}
 			budgetAccount={$page.data.budgetAccount}
 		/>
-		<Card class="max-w-full">
+		<Card size="none">
 			<h2 class="title">Lists</h2>
 		</Card>
 	</div>
 	<div class="grid grid-flow-row gap-4">
-		<Card class="max-w-full">
+		<Card size="none">
 			<h2 class="title">Notes</h2>
 		</Card>
 	</div>

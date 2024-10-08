@@ -26,6 +26,6 @@
 	}
 
 	.title-primary {
-		@apply text-2xl text-primary-700 font-bold;
+		@apply text-2xl text-primary-600 font-bold;
 	}
 }
