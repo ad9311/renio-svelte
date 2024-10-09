@@ -1,8 +1,8 @@
 import { writable, type Writable } from 'svelte/store';
 
-import type { FullBudget } from '$lib/types/budgets';
+import type { FullBudget, TransactionType } from '$lib/types/budgets';
 
-export const selectedBudget: Writable<FullBudget> = writable({
+export const budgetStore: Writable<FullBudget> = writable({
 	id: '0',
 	uid: '0_0000_00',
 	year: 0,
@@ -16,3 +16,5 @@ export const selectedBudget: Writable<FullBudget> = writable({
 	incomeList: [],
 	expenses: [],
 });
+
+export const transactionTypesStore: Writable<TransactionType[]> = writable([]);

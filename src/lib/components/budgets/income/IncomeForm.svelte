@@ -1,11 +1,20 @@
 <script lang="ts">
-	import { Input, Label, Textarea, Button } from 'flowbite-svelte';
+	import { Input, Label, Textarea, Select, Button } from 'flowbite-svelte';
 
-	import { selectedBudget } from '$lib/stores/budget';
+	import { budgetStore, transactionTypesStore } from '$lib/stores/budget';
+
+	const selectValues = $transactionTypesStore.map(t => ({
+		value: t.id,
+		name: t.name,
+	}));
 </script>
 
 <form method="POST" class="form">
-	<input type="hidden" name="budget_uid" value={$selectedBudget.uid} />
+	<input type="hidden" name="budget_uid" value={$budgetStore.uid} />
+	<fieldset>
+		<Label for="transaction_type_id">Transaction type</Label>
+		<Select items={selectValues} />
+	</fieldset>
 	<fieldset>
 		<Label for="description">Description</Label>
 		<Textarea id="description" name="description" placeholder="Write something here..." />
@@ -23,6 +32,6 @@
 		/>
 	</fieldset>
 	<fieldset class="actions">
-		<Button type="submit">Sign in</Button>
+		<Button type="submit">Submot </Button>
 	</fieldset>
 </form>

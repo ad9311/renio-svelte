@@ -5,9 +5,9 @@
 	import ExpenseAmount from './ExpenseAmount.svelte';
 	import IncomeAmount from './IncomeAmount.svelte';
 
-	import { selectedBudget } from '$lib/stores/budget';
+	import { budgetStore } from '$lib/stores/budget';
 
-	const budget = $selectedBudget;
+	const budget = $budgetStore;
 </script>
 
 <Card size="none">
