@@ -9,20 +9,21 @@ export const load: PageServerLoad = async ({ fetch }) => {
 	const fetchBudgetAccount = getResource(`${PUBLIC_API}/budget_account`, fetch);
 	const fetchBudgetCount = getResource(`${PUBLIC_API}/budgets?data=count`, fetch);
 
-	const results = await Promise.allSettled([fetchBudgetAccount, fetchBudgetCount]);
-	if (results[0].status === 'fulfilled' && results[0].value.status === 404) {
-		redirect(302, '/budgets/create');
+	try {
+		const responses = await Promise.all([fetchBudgetAccount, fetchBudgetCount]);
+		if (responses[0].status === 404) {
+			redirect(302, '/budgets/create');
+		}
+
+		if (responses.some(res => !res.ok)) {
+			redirect(302, '/whoops');
+		}
+
+		const budgetAccount = (await responses[0].json()).data.budgetAccount;
+		const budgetCount = (await responses[1].json()).data.budgetCount;
+
+		return { budgetAccount, budgetCount };
+	} catch (e) {
+		redirect(302, `/whoops?${e}`);
 	}
-
-	const budgetAccount =
-		results[0].status === 'fulfilled' && results[0].value.ok
-			? (await results[0].value.json()).data.budgetAccount
-			: null;
-
-	const budgetCount =
-		results[1].status === 'fulfilled' && results[1].value.ok
-			? (await results[1].value.json()).data.budgetCount
-			: 0;
-
-	return { budgetAccount, budgetCount };
 };

@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { Input, Label, Textarea, Button } from 'flowbite-svelte';
+
+	import { selectedBudget } from '$lib/stores/budget';
 </script>
 
 <form method="POST" class="form">
-	<input type="hidden" name="budget_uid" value={0} />
+	<input type="hidden" name="budget_uid" value={$selectedBudget.uid} />
 	<fieldset>
 		<Label for="description">Description</Label>
 		<Textarea id="description" name="description" placeholder="Write something here..." />

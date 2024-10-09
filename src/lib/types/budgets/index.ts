@@ -34,6 +34,6 @@ export type BudgetAccount = {
 	currentBudget: {
 		uid: string;
 		balance: number;
-		lastExpenseAmount: number | null;
-	} | null;
+		lastExpenseAmount: number;
+	};
 };
