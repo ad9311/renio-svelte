@@ -12,5 +12,5 @@
 	size="sm"
 	headerClass="title flex justify-between items-center p-4 md:p-5 rounded-t-lg"
 >
-	<IncomeForm />
+	<IncomeForm action="?/createIncome" />
 </Modal>

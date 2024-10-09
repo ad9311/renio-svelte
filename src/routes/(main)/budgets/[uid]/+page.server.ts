@@ -1,9 +1,11 @@
 import { redirect } from '@sveltejs/kit';
 
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, RequestEvent } from './$types';
 
 import { PUBLIC_API } from '$env/static/public';
 import { getResource } from '$lib/fetch';
+import type { ActionResponse } from '$lib/types';
+import type { Transaction } from '$lib/types/budgets';
 
 export const load: PageServerLoad = async ({ fetch, params }) => {
 	const fetchBudget = getResource(
@@ -25,4 +27,10 @@ export const load: PageServerLoad = async ({ fetch, params }) => {
 	} catch (e) {
 		redirect(302, `/whoops?${e}`);
 	}
+};
+
+export const actions = {
+	createIncome: async (event: RequestEvent): Promise<ActionResponse<Transaction>> => {
+		return { data: null, errors: [] };
+	},
 };

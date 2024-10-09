@@ -3,17 +3,19 @@
 
 	import { budgetStore, transactionTypesStore } from '$lib/stores/budget';
 
+	export let action: string;
+
 	const selectValues = $transactionTypesStore.map(t => ({
 		value: t.id,
 		name: t.name,
 	}));
 </script>
 
-<form method="POST" class="form">
-	<input type="hidden" name="budget_uid" value={$budgetStore.uid} />
+<form method="POST" class="form" {action}>
+	<input id="budget_uid" type="hidden" name="budget_uid" value={$budgetStore.uid} />
 	<fieldset>
 		<Label for="transaction_type_id">Transaction type</Label>
-		<Select items={selectValues} />
+		<Select id="transaction_type_id" name="transaction_type_id" items={selectValues} />
 	</fieldset>
 	<fieldset>
 		<Label for="description">Description</Label>
@@ -32,6 +34,6 @@
 		/>
 	</fieldset>
 	<fieldset class="actions">
-		<Button type="submit">Submot </Button>
+		<Button type="submit">Submit</Button>
 	</fieldset>
 </form>
