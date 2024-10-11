@@ -6,12 +6,17 @@
 
 	import NewIncomeModalForm from './NewIncomeModalForm.svelte';
 
+	import { page } from '$app/stores';
 	import { budgetStore } from '$lib/stores/budget';
 
-	let open: boolean = false;
+	let open = $page.form?.errors || $page.form?.data;
+	let hideFormErrors: boolean = false;
 
 	const budget = $budgetStore;
-	const openModal = () => {
+	const openModal = async () => {
+		if ($page.form?.errors) {
+			hideFormErrors = true;
+		}
 		open = true;
 	};
 </script>
@@ -43,4 +48,4 @@
 	</section>
 </Card>
 
-<NewIncomeModalForm bind:open />
+<NewIncomeModalForm bind:open bind:hideFormErrors />

@@ -7,6 +7,7 @@
 	import FormErrors from '$lib/components/FormErrors.svelte';
 
 	export let open: boolean = false;
+	export let hideFormErrors: boolean = false;
 
 	const form = $page.form;
 </script>
@@ -17,7 +18,7 @@
 	size="sm"
 	headerClass="title flex justify-between items-center p-4 md:p-5 rounded-t-lg"
 >
-	{#if form?.errors}
+	{#if form?.errors && !hideFormErrors}
 		<FormErrors errors={form?.errors} />
 	{/if}
 	<IncomeForm action="?/createIncome" />

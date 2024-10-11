@@ -23,15 +23,7 @@
 	</fieldset>
 	<fieldset>
 		<Label for="amount">Amount</Label>
-		<Input
-			type="number"
-			id="amount"
-			name="amount"
-			placeholder="100.99"
-			step="0.01"
-			min="1"
-			required
-		/>
+		<Input type="number" id="amount" name="amount" placeholder="100.99" step="0.01" min="1" />
 	</fieldset>
 	<fieldset class="actions">
 		<Button type="submit">Submit</Button>
