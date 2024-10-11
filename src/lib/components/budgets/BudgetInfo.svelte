@@ -5,9 +5,9 @@
 	import ExpenseAmount from './ExpenseAmount.svelte';
 	import IncomeAmount from './IncomeAmount.svelte';
 
-	import type { FullBudget } from '$lib/types/budgets';
+	import { budgetStore } from '$lib/stores/budget';
 
-	export let budget: FullBudget;
+	const budget = $budgetStore;
 </script>
 
 <Card size="none">

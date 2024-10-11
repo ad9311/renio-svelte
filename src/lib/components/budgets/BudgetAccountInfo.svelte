@@ -7,10 +7,10 @@
 
 	import type { BudgetAccount } from '$lib/types/budgets';
 
-	export let budgetAccount: BudgetAccount | null;
+	export let budgetAccount: BudgetAccount;
 	export let budgetCount: number;
 
-	const currentBudget = budgetAccount?.currentBudget;
+	const currentBudget = budgetAccount.currentBudget;
 </script>
 
 <Card size="none">
@@ -31,30 +31,24 @@
 		<div>
 			<div class="flex items-center gap-1">
 				<h3 class="subtitle">Current budget</h3>
-				{#if currentBudget}
-					<a href={`/budgets/${currentBudget.uid}`}>
-						<ArrowUpRightFromSquareSolid size="sm" />
-					</a>
-				{/if}
+				<a href={`/budgets/${currentBudget.uid}`}>
+					<ArrowUpRightFromSquareSolid size="sm" />
+				</a>
 			</div>
-			{#if currentBudget}
-				<div class="mt-2 grid grid-flow-row gap-1">
-					<div class="grid grid-cols-2">
-						<p class="text-sm">Balance:</p>
-						<div class="w-fit">
-							<BudgetBalance balance={currentBudget.balance} />
-						</div>
-					</div>
-					<div class="grid grid-cols-2">
-						<p class="text-sm">Last expense:</p>
-						<div class="w-fit">
-							<ExpenseAmount amount={currentBudget.lastExpenseAmount} />
-						</div>
+			<div class="mt-2 grid grid-flow-row gap-1">
+				<div class="grid grid-cols-2">
+					<p class="text-sm">Balance:</p>
+					<div class="w-fit">
+						<BudgetBalance balance={currentBudget.balance} />
 					</div>
 				</div>
-			{:else}
-				<p class="mt-2 text-sm text-gray-400 text-center">No budget for this month</p>
-			{/if}
+				<div class="grid grid-cols-2">
+					<p class="text-sm">Last expense:</p>
+					<div class="w-fit">
+						<ExpenseAmount amount={currentBudget.lastExpenseAmount} />
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 </Card>
