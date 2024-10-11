@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { fail, redirect, type ActionFailure } from '@sveltejs/kit';
 
 import type { PageServerLoad, RequestEvent } from './$types';
 
@@ -36,13 +36,7 @@ export const actions = {
 		request,
 		params,
 		cookies,
-	}: RequestEvent): Promise<ActionResponse<Transaction>> => {
-		const initData: ActionResponse<Transaction> = {
-			data: null,
-			errors: null,
-			modal: true,
-		};
-
+	}: RequestEvent): Promise<ActionResponse<Transaction> | ActionFailure<{ errors: string[] }>> => {
 		const formData = await request.formData();
 		const incomeData = {
 			transactionTypeId: Number(formData.get('transaction_type_id')),
@@ -52,7 +46,7 @@ export const actions = {
 
 		const validation = transactionDataValidation.safeParse(incomeData);
 		if (validation.error) {
-			return { ...initData, errors: formatZodErrors(validation.error.issues) };
+			return fail(400, { errors: formatZodErrors(validation.error.issues) });
 		}
 
 		const sessionToken = cookies.get('renio-session');
@@ -63,9 +57,9 @@ export const actions = {
 		});
 		if (response.ok) {
 			const json = await response.json();
-			return { ...initData, data: json.data.income };
+			return { data: json.data.income };
 		}
 
-		return { ...initData, errors: [response.statusText] };
+		return fail(400, { errors: [`backend responded with ${response.statusText}`] });
 	},
 };
