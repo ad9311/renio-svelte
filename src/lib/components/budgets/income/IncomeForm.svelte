@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Input, Label, Textarea, Select, Button } from 'flowbite-svelte';
 
+	import { enhance } from '$app/forms';
 	import { budgetStore, transactionTypesStore } from '$lib/stores/budget';
 
 	export let action: string;
@@ -11,11 +12,16 @@
 	}));
 </script>
 
-<form method="POST" class="form" {action}>
+<form method="POST" class="form" {action} use:enhance>
 	<input id="budget_uid" type="hidden" name="budget_uid" value={$budgetStore.uid} />
 	<fieldset>
 		<Label for="transaction_type_id">Transaction type</Label>
-		<Select id="transaction_type_id" name="transaction_type_id" items={selectValues} />
+		<Select
+			id="transaction_type_id"
+			name="transaction_type_id"
+			items={selectValues}
+			value={selectValues[0].value}
+		/>
 	</fieldset>
 	<fieldset>
 		<Label for="description">Description</Label>

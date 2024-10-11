@@ -10,13 +10,9 @@
 	import { budgetStore } from '$lib/stores/budget';
 
 	let open = $page.form?.errors || $page.form?.data;
-	let hideFormErrors: boolean = false;
 
 	const budget = $budgetStore;
 	const openModal = async () => {
-		if ($page.form?.errors) {
-			hideFormErrors = true;
-		}
 		open = true;
 	};
 </script>
@@ -30,7 +26,7 @@
 				&nbsp;New
 			</Button>
 		</div>
-		<ul class="mt-4 grid grid-flow-row gap-2">
+		<ul class="mt-4 grid grid-flow-row gap-2 max-h-96 xl:max-h-80 overflow-y-scroll">
 			{#each budget.incomeList as income}
 				<li class="border-b">
 					<a href={`/budgets/${budget.uid}/income-list/${income.id}`}>
@@ -48,4 +44,4 @@
 	</section>
 </Card>
 
-<NewIncomeModalForm bind:open bind:hideFormErrors />
+<NewIncomeModalForm bind:open />
