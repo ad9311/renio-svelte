@@ -2,8 +2,6 @@ export type FormErrors = string[] | null;
 
 export type ActionResponse<T> = {
 	data: T | null;
-	errors: FormErrors;
-	modal?: boolean;
 };
 
 export type User = {

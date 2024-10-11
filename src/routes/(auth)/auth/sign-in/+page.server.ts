@@ -1,5 +1,5 @@
-import type { RequestEvent } from '@sveltejs/kit';
-import { redirect } from '@sveltejs/kit';
+import type { ActionFailure, RequestEvent } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 
 import { PUBLIC_API } from '$env/static/public';
 import { formatZodErrors } from '$lib';
@@ -8,8 +8,10 @@ import { retrieveSessionToken } from '$lib/server/index.js';
 import type { ActionResponse, User } from '$lib/types';
 import { signInDataValidation } from '$lib/validations';
 
+type ReturnType = Promise<ActionResponse<User> | ActionFailure<{ errors: string[] }>>;
+
 export const actions = {
-	default: async (event: RequestEvent): Promise<ActionResponse<User>> => {
+	default: async (event: RequestEvent): ReturnType => {
 		const formData = await event.request.formData();
 		const signInData = {
 			email: formData.get('email'),
@@ -18,7 +20,7 @@ export const actions = {
 
 		const validation = signInDataValidation.safeParse(signInData);
 		if (validation.error) {
-			return { data: null, errors: formatZodErrors(validation.error.issues) };
+			return fail(400, { errors: formatZodErrors(validation.error.issues) });
 		}
 
 		const body = JSON.stringify({ user: { ...signInData } });
@@ -36,6 +38,6 @@ export const actions = {
 			redirect(302, '/');
 		}
 
-		return { data: null, errors: [response.statusText] };
+		return fail(400, { errors: [`backend responded with ${response.statusText}`] });
 	},
 };

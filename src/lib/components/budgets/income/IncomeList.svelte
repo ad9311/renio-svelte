@@ -6,12 +6,13 @@
 
 	import NewIncomeModalForm from './NewIncomeModalForm.svelte';
 
+	import { page } from '$app/stores';
 	import { budgetStore } from '$lib/stores/budget';
 
-	let open: boolean = false;
+	let open = $page.form?.errors || $page.form?.data;
 
 	const budget = $budgetStore;
-	const openModal = () => {
+	const openModal = async () => {
 		open = true;
 	};
 </script>
@@ -25,7 +26,7 @@
 				&nbsp;New
 			</Button>
 		</div>
-		<ul class="mt-4 grid grid-flow-row gap-2">
+		<ul class="mt-4 grid grid-flow-row gap-2 max-h-96 xl:max-h-80 overflow-y-scroll">
 			{#each budget.incomeList as income}
 				<li class="border-b">
 					<a href={`/budgets/${budget.uid}/income-list/${income.id}`}>
