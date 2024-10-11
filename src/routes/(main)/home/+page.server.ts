@@ -6,8 +6,8 @@ import { PUBLIC_API } from '$env/static/public';
 import { getResource } from '$lib/fetch';
 
 export const load: PageServerLoad = async ({ fetch }) => {
-	const fetchBudgetAccount = getResource(`${PUBLIC_API}/budget_account`, fetch);
-	const fetchBudgetCount = getResource(`${PUBLIC_API}/budgets?data=count`, fetch);
+	const fetchBudgetAccount = getResource(`${PUBLIC_API}/budget_account`, { fetch });
+	const fetchBudgetCount = getResource(`${PUBLIC_API}/budgets?data=count`, { fetch });
 
 	try {
 		const responses = await Promise.all([fetchBudgetAccount, fetchBudgetCount]);

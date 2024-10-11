@@ -12,9 +12,9 @@ import { transactionDataValidation } from '$lib/validations';
 export const load: PageServerLoad = async ({ fetch, params }) => {
 	const fetchBudget = getResource(
 		`${PUBLIC_API}/budgets/${params.uid}?transactions=incomes:expenses`,
-		fetch,
+		{ fetch },
 	);
-	const fetchTransactionTypes = getResource(`${PUBLIC_API}/transaction_types`, fetch);
+	const fetchTransactionTypes = getResource(`${PUBLIC_API}/transaction_types`, { fetch });
 
 	try {
 		const responses = await Promise.all([fetchBudget, fetchTransactionTypes]);
@@ -35,13 +35,14 @@ export const actions = {
 	createIncome: async ({
 		request,
 		params,
-		fetch,
+		cookies,
 	}: RequestEvent): Promise<ActionResponse<Transaction>> => {
 		const initData: ActionResponse<Transaction> = {
 			data: null,
 			errors: null,
 			modal: true,
 		};
+
 		const formData = await request.formData();
 		const incomeData = {
 			transactionTypeId: Number(formData.get('transaction_type_id')),
@@ -54,8 +55,12 @@ export const actions = {
 			return { ...initData, errors: formatZodErrors(validation.error.issues) };
 		}
 
+		const sessionToken = cookies.get('renio-session');
 		const body = JSON.stringify(toSnakeCaseObject({ income: incomeData }));
-		const response = await postResource(`${PUBLIC_API}/budgets/${params.uid}/incomes`, fetch, body);
+		const response = await postResource(`${PUBLIC_API}/budgets/${params.uid}/incomes`, {
+			sessionToken,
+			body,
+		});
 		if (response.ok) {
 			const json = await response.json();
 			return { ...initData, data: json.data.income };
