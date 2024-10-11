@@ -4,10 +4,9 @@
 	import { page } from '$app/stores';
 	import BudgetInfo from '$lib/components/budgets/BudgetInfo.svelte';
 	import IncomeList from '$lib/components/budgets/income/IncomeList.svelte';
-	import { budgetStore, transactionTypesStore } from '$lib/stores/budget';
+	import { budgetStore } from '$lib/stores/budget';
 
 	budgetStore.set($page.data.budget);
-	transactionTypesStore.set($page.data.transactionTypes);
 </script>
 
 <div class="grid grid-flow-row gap-4 lg:gap-6">

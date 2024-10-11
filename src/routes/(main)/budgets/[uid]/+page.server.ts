@@ -1,4 +1,4 @@
-import { fail, redirect, type ActionFailure } from '@sveltejs/kit';
+import { error, fail, type ActionFailure } from '@sveltejs/kit';
 
 import type { PageServerLoad, RequestEvent } from './$types';
 
@@ -10,25 +10,17 @@ import type { Transaction } from '$lib/types/budgets';
 import { transactionDataValidation } from '$lib/validations';
 
 export const load: PageServerLoad = async ({ fetch, params }) => {
-	const fetchBudget = getResource(
+	const response = await getResource(
 		`${PUBLIC_API}/budgets/${params.uid}?transactions=incomes:expenses`,
 		{ fetch },
 	);
-	const fetchTransactionTypes = getResource(`${PUBLIC_API}/transaction_types`, { fetch });
 
-	try {
-		const responses = await Promise.all([fetchBudget, fetchTransactionTypes]);
-		if (responses.some(res => !res.ok)) {
-			redirect(302, '/whoops');
-		}
-
-		const budget = (await responses[0].json()).data.budget;
-		const transactionTypes = (await responses[1].json()).data.transactionTypes;
-
-		return { budget, transactionTypes };
-	} catch (e) {
-		redirect(302, `/whoops?${e}`);
+	if (response.ok) {
+		const json = await response.json();
+		return { budget: json.data.budget };
 	}
+
+	error(404);
 };
 
 export const actions = {

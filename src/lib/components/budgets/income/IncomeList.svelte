@@ -12,7 +12,7 @@
 	let open = $page.form?.errors || $page.form?.data;
 
 	const budget = $budgetStore;
-	const openModal = async () => {
+	const openModal = () => {
 		open = true;
 	};
 </script>

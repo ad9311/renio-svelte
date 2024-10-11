@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 import type { PageServerLoad } from './$types';
 
@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
 		}
 
 		if (responses.some(res => !res.ok)) {
-			redirect(302, '/whoops');
+			error(404);
 		}
 
 		const budgetAccount = (await responses[0].json()).data.budgetAccount;
@@ -24,6 +24,6 @@ export const load: PageServerLoad = async ({ fetch }) => {
 
 		return { budgetAccount, budgetCount };
 	} catch (e) {
-		redirect(302, `/whoops?${e}`);
+		error(404, { message: (e as Error)?.message });
 	}
 };
