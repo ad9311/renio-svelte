@@ -9,7 +9,7 @@ export async function getResource(url: string, fn: Fetch): Promise<Response> {
 	return fn(url, { headers: defaultHeaders });
 }
 
-export async function postResource(url: string, fn: Fetch, body?: BodyInit): Promise<Response> {
+export async function postResource(url: string, fn: Fetch, body: BodyInit): Promise<Response> {
 	return fn(url, { method: 'POST', headers: defaultHeaders, body });
 }
 

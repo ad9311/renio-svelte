@@ -18,3 +18,22 @@ export function formatCurrency(amount: number, currency: Currency = 'COP') {
 		currency,
 	});
 }
+
+export function camelToSnake(str: string) {
+	return str.replace(/([A-Z])/g, match => `_${match.toLowerCase()}`);
+}
+
+export function toSnakeCaseObject(object: { [key: string]: unknown }): { [key: string]: unknown } {
+	const entries = Object.entries(object);
+	const newObject: { [key: string]: unknown } = {};
+
+	entries.forEach(([key, value]) => {
+		if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+			newObject[camelToSnake(key)] = toSnakeCaseObject(value as { [key: string]: unknown });
+		} else {
+			newObject[camelToSnake(key)] = value;
+		}
+	});
+
+	return newObject;
+}

@@ -6,7 +6,7 @@ import { formatZodErrors } from '$lib';
 import { defaultHeaders } from '$lib/fetch/index.js';
 import { retrieveSessionToken } from '$lib/server/index.js';
 import type { ActionResponse, User } from '$lib/types';
-import { SignInDataValidation } from '$lib/validations';
+import { signInDataValidation } from '$lib/validations';
 
 export const actions = {
 	default: async (event: RequestEvent): Promise<ActionResponse<User>> => {
@@ -16,7 +16,7 @@ export const actions = {
 			password: formData.get('password'),
 		};
 
-		const validation = SignInDataValidation.safeParse(signInData);
+		const validation = signInDataValidation.safeParse(signInData);
 		if (validation.error) {
 			return { data: null, errors: formatZodErrors(validation.error.issues) };
 		}
