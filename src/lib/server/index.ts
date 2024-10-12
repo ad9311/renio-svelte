@@ -1,5 +1,6 @@
-import { SESSION_KEY } from "$env/static/private";
-import { jwtVerify } from "jose";
+import { jwtVerify } from 'jose';
+
+import { SESSION_KEY } from '$env/static/private';
 
 export function retrieveSessionToken(response: Response) {
 	const authHeader = response.headers.get('authorization');
@@ -8,11 +9,14 @@ export function retrieveSessionToken(response: Response) {
 	return sessionToken;
 }
 
+/* eslint-disable no-console */
 export async function isSessionTokenValid(sessionToken: string) {
 	try {
 		await jwtVerify(sessionToken as string, new TextEncoder().encode(SESSION_KEY));
 		return true;
 	} catch (error) {
+		console.error(error);
 		return false;
 	}
 }
+/* eslint-enable no-console */
