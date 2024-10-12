@@ -1,10 +1,10 @@
-import { error, fail, type ActionFailure } from '@sveltejs/kit';
+import { error, fail, redirect, type ActionFailure } from '@sveltejs/kit';
 
 import type { PageServerLoad, RequestEvent } from './$types';
 
 import { PUBLIC_API } from '$env/static/public';
 import { formatZodErrors, toSnakeCaseObject } from '$lib';
-import { getResource, patchResource } from '$lib/fetch';
+import { deleteResource, getResource, patchResource } from '$lib/fetch';
 import type { ActionResponse } from '$lib/types';
 import type { Transaction } from '$lib/types/budgets';
 import { transactionDataValidation } from '$lib/validations';
@@ -51,6 +51,21 @@ export const actions = {
 		if (response.ok) {
 			const json = await response.json();
 			return { data: json.data.income };
+		}
+
+		return fail(400, { errors: [`backend responded with ${response.statusText}`] });
+	},
+	deleteIncome: async ({
+		params,
+		fetch,
+	}: RequestEvent): Promise<ActionFailure<{ errors: string[] }>> => {
+		// const sessionToken = cookies.get('renio-session');
+		const response = await deleteResource(
+			`${PUBLIC_API}/budgets/${params.uid}/incomes/${params.id}`,
+			{ fetch },
+		);
+		if (response.ok) {
+			redirect(302, `/budgets/${params.uid}`);
 		}
 
 		return fail(400, { errors: [`backend responded with ${response.statusText}`] });

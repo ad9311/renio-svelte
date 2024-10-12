@@ -3,14 +3,20 @@
 	import { TrashBinSolid } from 'flowbite-svelte-icons';
 
 	import { page } from '$app/stores';
+	import DeleteIncomeModalForm from '$lib/components/budgets/income/DeleteIncomeModalForm.svelte';
 	import EditIncomeModalForm from '$lib/components/budgets/income/EditIncomeModalForm.svelte';
 	import IncomeAmount from '$lib/components/budgets/IncomeAmount.svelte';
 	import { incomeStore } from '$lib/stores/budget';
 
-	let open: boolean = false;
+	let openEdit: boolean = false;
+	let openDelete: boolean = false;
 
-	const openModal = () => {
-		open = true;
+	const openEditModal = () => {
+		openEdit = true;
+	};
+
+	const openDeleteModal = () => {
+		openDelete = true;
 	};
 
 	$: if ($page.form?.data) {
@@ -37,11 +43,12 @@
 		</div>
 	</div>
 	<div class="mt-8 flex items-center justify-between">
-		<Button class="!p-2" color="none">
+		<Button class="!p-2" color="none" on:click={openDeleteModal}>
 			<TrashBinSolid size="md" color="red" />
 		</Button>
-		<Button on:click={openModal}>Edit</Button>
+		<Button on:click={openEditModal}>Edit</Button>
 	</div>
 </Card>
 
-<EditIncomeModalForm bind:open />
+<EditIncomeModalForm bind:open={openEdit} />
+<DeleteIncomeModalForm bind:open={openDelete} />
