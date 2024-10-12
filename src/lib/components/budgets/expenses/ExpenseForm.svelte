@@ -33,6 +33,7 @@
 			name="transaction_type_id"
 			items={selectValues}
 			value={expense?.transactionType.id}
+			required
 		/>
 	</fieldset>
 	<fieldset>
@@ -42,6 +43,7 @@
 			name="description"
 			placeholder="Write something here..."
 			value={expense?.description}
+			required
 		/>
 	</fieldset>
 	<fieldset>
@@ -54,6 +56,7 @@
 			step="0.01"
 			min="1"
 			value={expense?.amount}
+			required
 		/>
 	</fieldset>
 	<fieldset class="actions">
