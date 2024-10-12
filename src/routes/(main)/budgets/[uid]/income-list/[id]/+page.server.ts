@@ -59,7 +59,6 @@ export const actions = {
 		params,
 		fetch,
 	}: RequestEvent): Promise<ActionFailure<{ errors: string[] }>> => {
-		// const sessionToken = cookies.get('renio-session');
 		const response = await deleteResource(
 			`${PUBLIC_API}/budgets/${params.uid}/incomes/${params.id}`,
 			{ fetch },

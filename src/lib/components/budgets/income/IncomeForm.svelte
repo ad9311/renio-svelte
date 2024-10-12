@@ -4,23 +4,17 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import FormErrorList from '$lib/components/FormErrorList.svelte';
-	import { budgetStore, incomeStore, initIncome, transactionTypesStore } from '$lib/stores/budget';
+	import type { TransactionType } from '$lib/types/budgets';
 
 	export let action: string;
-	export let incomeId: string | undefined = undefined;
 
-	let amount: number | undefined;
+	$: income = $page.data.income;
 
-	const selectValues = $transactionTypesStore.map(t => ({
+	const transactionTypes = $page.data.transactionTypes as TransactionType[];
+	const selectValues = transactionTypes.map(t => ({
 		value: t.id,
 		name: t.name,
 	}));
-
-	if (!incomeId) {
-		incomeStore.set(initIncome);
-	} else {
-		amount = $incomeStore.amount;
-	}
 </script>
 
 {#if $page.form?.errors}
@@ -28,9 +22,9 @@
 {/if}
 
 <form method="POST" class="form" {action} use:enhance>
-	<input id="budget_uid" type="hidden" name="budget_uid" value={$budgetStore.uid} />
-	{#if incomeId}
-		<input id="income_id" type="hidden" name="income_id" value={incomeId} />
+	<input id="budget_uid" type="hidden" name="budget_uid" value={$page.params.uid} />
+	{#if income}
+		<input id="income_id" type="hidden" name="income_id" value={income.id} />
 	{/if}
 	<fieldset>
 		<Label for="transaction_type_id">Transaction type</Label>
@@ -38,7 +32,7 @@
 			id="transaction_type_id"
 			name="transaction_type_id"
 			items={selectValues}
-			value={$incomeStore.transactionType.id}
+			value={income?.transactionType.id}
 		/>
 	</fieldset>
 	<fieldset>
@@ -47,7 +41,7 @@
 			id="description"
 			name="description"
 			placeholder="Write something here..."
-			value={$incomeStore.description}
+			value={income?.description}
 		/>
 	</fieldset>
 	<fieldset>
@@ -59,7 +53,7 @@
 			placeholder="100.99"
 			step="0.01"
 			min="1"
-			value={amount}
+			value={income?.amount}
 		/>
 	</fieldset>
 	<fieldset class="actions">
