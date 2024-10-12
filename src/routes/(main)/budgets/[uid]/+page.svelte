@@ -2,6 +2,7 @@
 	import { Card } from 'flowbite-svelte';
 
 	import BudgetInfo from '$lib/components/budgets/BudgetInfo.svelte';
+	import Expenses from '$lib/components/budgets/expenses/Expenses.svelte';
 	import IncomeList from '$lib/components/budgets/income/IncomeList.svelte';
 </script>
 
@@ -11,9 +12,7 @@
 		<IncomeList />
 	</div>
 	<div class="grid grid-flow-row gap-4 lg:grid-flow-col lg:gap-4">
-		<Card size="none">
-			<h2 class="title">Expenses</h2>
-		</Card>
+		<Expenses />
 		<Card size="none">
 			<h2 class="title">Graph</h2>
 		</Card>

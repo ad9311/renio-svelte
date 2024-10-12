@@ -8,11 +8,11 @@
 
 	let badgeColor: FlowbiteColors = 'none';
 
-	if (balance > 0) {
+	$: if (balance > 0) {
 		badgeColor = 'green';
 	}
 
-	if (balance < 0) {
+	$: if (balance < 0) {
 		badgeColor = 'red';
 	}
 </script>

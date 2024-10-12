@@ -54,4 +54,34 @@ export const actions = {
 
 		return fail(400, { errors: [`backend responded with ${response.statusText}`] });
 	},
+	createExpense: async ({
+		request,
+		params,
+		cookies,
+	}: RequestEvent): Promise<ActionResponse<Transaction> | ActionFailure<{ errors: string[] }>> => {
+		const formData = await request.formData();
+		const expenseData = {
+			transactionTypeId: Number(formData.get('transaction_type_id')),
+			description: formData.get('description'),
+			amount: Number(formData.get('amount')),
+		};
+
+		const validation = transactionDataValidation.safeParse(expenseData);
+		if (validation.error) {
+			return fail(400, { errors: formatZodErrors(validation.error.issues) });
+		}
+
+		const sessionToken = cookies.get('renio-session');
+		const body = JSON.stringify(toSnakeCaseObject({ expense: expenseData }));
+		const response = await postResource(`${PUBLIC_API}/budgets/${params.uid}/expenses`, {
+			sessionToken,
+			body,
+		});
+		if (response.ok) {
+			const json = await response.json();
+			return { data: json.data.expense };
+		}
+
+		return fail(400, { errors: [`backend responded with ${response.statusText}`] });
+	},
 };
