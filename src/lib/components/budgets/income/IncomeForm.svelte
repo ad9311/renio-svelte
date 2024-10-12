@@ -4,14 +4,23 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import FormErrorList from '$lib/components/FormErrorList.svelte';
-	import { budgetStore, transactionTypesStore } from '$lib/stores/budget';
+	import { budgetStore, incomeStore, initIncome, transactionTypesStore } from '$lib/stores/budget';
 
 	export let action: string;
+	export let incomeId: string | undefined = undefined;
+
+	let amount: number | undefined;
 
 	const selectValues = $transactionTypesStore.map(t => ({
 		value: t.id,
 		name: t.name,
 	}));
+
+	if (!incomeId) {
+		incomeStore.set(initIncome);
+	} else {
+		amount = $incomeStore.amount;
+	}
 </script>
 
 {#if $page.form?.errors}
@@ -20,17 +29,38 @@
 
 <form method="POST" class="form" {action} use:enhance>
 	<input id="budget_uid" type="hidden" name="budget_uid" value={$budgetStore.uid} />
+	{#if incomeId}
+		<input id="income_id" type="hidden" name="income_id" value={incomeId} />
+	{/if}
 	<fieldset>
 		<Label for="transaction_type_id">Transaction type</Label>
-		<Select id="transaction_type_id" name="transaction_type_id" items={selectValues} />
+		<Select
+			id="transaction_type_id"
+			name="transaction_type_id"
+			items={selectValues}
+			value={$incomeStore.transactionType.id}
+		/>
 	</fieldset>
 	<fieldset>
 		<Label for="description">Description</Label>
-		<Textarea id="description" name="description" placeholder="Write something here..." />
+		<Textarea
+			id="description"
+			name="description"
+			placeholder="Write something here..."
+			value={$incomeStore.description}
+		/>
 	</fieldset>
 	<fieldset>
 		<Label for="amount">Amount</Label>
-		<Input type="number" id="amount" name="amount" placeholder="100.99" step="0.01" min="1" />
+		<Input
+			type="number"
+			id="amount"
+			name="amount"
+			placeholder="100.99"
+			step="0.01"
+			min="1"
+			value={amount}
+		/>
 	</fieldset>
 	<fieldset class="actions">
 		<Button type="submit">Submit</Button>

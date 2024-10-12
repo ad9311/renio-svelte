@@ -6,12 +6,12 @@
 
 	import NewIncomeModalForm from './NewIncomeModalForm.svelte';
 
-	import { page } from '$app/stores';
 	import { budgetStore } from '$lib/stores/budget';
 
-	let open = $page.form?.errors || $page.form?.data;
+	let open = false;
 
 	const budget = $budgetStore;
+
 	const openModal = () => {
 		open = true;
 	};

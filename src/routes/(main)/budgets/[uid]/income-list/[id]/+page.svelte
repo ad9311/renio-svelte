@@ -6,16 +6,18 @@
 	import EditIncomeModalForm from '$lib/components/budgets/income/EditIncomeModalForm.svelte';
 	import IncomeAmount from '$lib/components/budgets/IncomeAmount.svelte';
 	import { incomeStore } from '$lib/stores/budget';
-	import type { Transaction } from '$lib/types/budgets';
 
 	let open: boolean = false;
 
-	const income: Transaction = $page.data.income;
 	const openModal = () => {
 		open = true;
 	};
 
-	incomeStore.set(income);
+	$: if ($page.form?.data) {
+		incomeStore.set($page.form.data);
+	} else {
+		incomeStore.set($page.data.income);
+	}
 </script>
 
 <Card size="sm" class="mx-auto">
@@ -23,15 +25,15 @@
 	<div class="mt-2 grid grid-flow-row gap-1">
 		<div class="grid grid-cols-2">
 			<p class="text-sm">Transaction:</p>
-			<p class="text-sm">{income.transactionType.name}</p>
+			<p class="text-sm">{$incomeStore.transactionType.name}</p>
 		</div>
 		<div class="grid grid-cols-2">
 			<p class="text-sm">Description:</p>
-			<p class="text-sm">{income.description}</p>
+			<p class="text-sm">{$incomeStore.description}</p>
 		</div>
 		<div class="grid grid-cols-2 items-center">
 			<p class="text-sm">Amount:</p>
-			<IncomeAmount amount={income.amount} />
+			<IncomeAmount amount={$incomeStore.amount} />
 		</div>
 	</div>
 	<div class="mt-8 flex items-center justify-between">

@@ -20,12 +20,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 export const handleFetch: HandleFetch = async ({ event, request, fetch }) => {
 	const sessionToken = event.cookies.get('renio-session');
-	const newRequest = new Request(request, {
-		headers: {
-			...request.headers,
-			Authorization: `Bearer ${sessionToken}`,
-		},
+	return fetch(request.url, {
+		method: request.method,
+		headers: { ...request.headers, Authorization: `Bearer ${sessionToken}` },
 	});
-	const response = await fetch(newRequest);
-	return response;
 };

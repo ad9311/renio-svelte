@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 import type { PageServerLoad } from './$types';
 
@@ -11,6 +11,5 @@ export const load: PageServerLoad = async ({ fetch }) => {
 		redirect(302, '/home');
 	}
 
-	const json = await response.json();
-	return { errors: json.errors };
+	error(400);
 };
