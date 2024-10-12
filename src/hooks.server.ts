@@ -4,13 +4,13 @@ import { PUBLIC_HOST } from '$env/static/public';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const pathname: string = event.url.pathname;
-	const session = event.cookies.get('renio-session');
+	const sessionToken = event.cookies.get('renio-session');
 
-	if (pathname.startsWith('/auth/sign-in') && session) {
+	if (pathname.startsWith('/auth/sign-in') && sessionToken) {
 		return Response.redirect(`${PUBLIC_HOST}`, 302);
 	}
 
-	if (!pathname.startsWith('/auth/sign-in') && !session) {
+	if (!pathname.startsWith('/auth/sign-in') && !sessionToken) {
 		return Response.redirect(`${PUBLIC_HOST}/auth/sign-in`, 302);
 	}
 

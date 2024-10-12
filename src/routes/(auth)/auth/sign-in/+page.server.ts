@@ -1,6 +1,8 @@
 import type { ActionFailure, RequestEvent } from '@sveltejs/kit';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail, error, redirect } from '@sveltejs/kit';
+import { jwtVerify } from 'jose';
 
+import { SESSION_KEY } from '$env/static/private';
 import { PUBLIC_API } from '$env/static/public';
 import { formatZodErrors } from '$lib';
 import { defaultHeaders } from '$lib/fetch/index.js';
@@ -31,10 +33,18 @@ export const actions = {
 		});
 
 		if (response.ok) {
-			const sessionToken = (await retrieveSessionToken(response)) as string;
-			event.cookies.set('renio-session', sessionToken, {
-				path: '/',
-			});
+			try {
+				const sessionToken = retrieveSessionToken(response) as string;
+				const verified = await jwtVerify(sessionToken, new TextEncoder().encode(SESSION_KEY));
+				const expiration = new Date(Number(verified.payload.exp) * 1000);
+				event.cookies.set('renio-session', sessionToken, {
+					path: '/',
+					expires: expiration,
+				});
+			} catch (e) {
+				error(500, { message: `error signing in: ${(e as Error)?.message}` });
+			}
+
 			redirect(302, '/');
 		}
 
